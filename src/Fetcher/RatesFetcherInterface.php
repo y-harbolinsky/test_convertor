@@ -4,6 +4,6 @@ namespace App\Fetcher;
 
 interface RatesFetcherInterface
 {
-    public function getEcbRates(): array;
-    public function getCbrRates(): array;
+    public function getEcbRates(): string;
+    public function getCbrRates(): string;
 }

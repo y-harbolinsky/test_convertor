@@ -22,7 +22,7 @@ class RatesFetcher implements RatesFetcherInterface
         $this->config = $config;
     }
 
-    public function getEcbRates(): array
+    public function getEcbRates(): string
     {
         $response = $this->client->request(
             Request::METHOD_GET,
@@ -33,10 +33,10 @@ class RatesFetcher implements RatesFetcherInterface
             throw new \FetchException('unable to fetch rates. Please try again later.');
         }
 
-        return $this->parseEcbRates($response->getContent());
+        return $response->getContent();
     }
 
-    public function getCbrRates(): array
+    public function getCbrRates(): string
     {
         $response = $this->client->request(
             Request::METHOD_GET,
@@ -47,30 +47,6 @@ class RatesFetcher implements RatesFetcherInterface
             throw new \FetchException('unable to fetch rates. Please try again later.');
         }
 
-        return $this->parseCbrRates($response->getContent());
-    }
-
-    private function parseEcbRates(string $content): array
-    {
-        $rates = [];
-        $data = simplexml_load_string($content);
-
-        foreach($data->Cube->Cube->Cube as $currency) {
-            $rates[(string)$currency['currency']] = (string)$currency['rate'];
-        }
-
-        return $rates;
-    }
-
-    private function parseCbrRates(string $content): array
-    {
-        $rates = [];
-        $data = simplexml_load_string($content);
-
-        foreach($data->Valute as $currency) {
-            $rates[(string)$currency->CharCode] = (string)$currency->Value;
-        }
-
-        return $rates;
+        return $response->getContent();
     }
 }

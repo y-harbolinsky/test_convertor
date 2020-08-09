@@ -1,8 +1,8 @@
 <?php declare(strict_types = 1);
 
-namespace App\Handler;
+namespace App\Service\Handler;
 
-use App\Fetcher\RatesFetcherInterface;
+use App\Service\Fetcher\RatesFetcherInterface;
 
 class RatesHandler implements RatesHandlerInterface
 {

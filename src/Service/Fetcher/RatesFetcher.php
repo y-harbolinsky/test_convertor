@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace App\Fetcher;
+namespace App\Service\Fetcher;
 
 use App\Config\RatesSourceConfig;
 use App\Exception\FetchException;

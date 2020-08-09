@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\RateRepository;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Rate
 {
     /**
+     * @var int
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -19,21 +21,26 @@ class Rate
     private $id;
 
     /**
+     * @var string
      * @ORM\Column(name="base_currency", type="string", length=3)
      */
     private $baseCurrency;
 
     /**
+     * @var string
      * @ORM\Column(name="target_currency", type="string", length=3)
      */
     private $targetCurrency;
 
     /**
+     * @var float
      * @ORM\Column(name="exchange_rate", type="decimal", precision=13, scale=8)
      */
     private $exchangeRate;
 
     /**
+     * @var \DateTimeInterface
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
     private $updated;
@@ -67,12 +74,12 @@ class Rate
         return $this;
     }
 
-    public function getExchangeRate(): ?string
+    public function getExchangeRate(): ?float
     {
         return $this->exchangeRate;
     }
 
-    public function setExchangeRate(string $exchangeRate): self
+    public function setExchangeRate(float $exchangeRate): self
     {
         $this->exchangeRate = $exchangeRate;
 
@@ -82,12 +89,5 @@ class Rate
     public function getUpdated(): ?\DateTimeInterface
     {
         return $this->updated;
-    }
-
-    public function setUpdated(\DateTimeInterface $updated): self
-    {
-        $this->updated = $updated;
-
-        return $this;
     }
 }

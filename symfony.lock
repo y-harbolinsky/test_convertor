@@ -84,6 +84,18 @@
     "doctrine/sql-formatter": {
         "version": "1.1.1"
     },
+    "friendsofsymfony/rest-bundle": {
+        "version": "2.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "2.2",
+            "ref": "cad41ef93d6150067ae2bb3c7fd729492dff6f0a"
+        },
+        "files": [
+            "config/packages/fos_rest.yaml"
+        ]
+    },
     "gedmo/doctrine-extensions": {
         "version": "v2.4.41"
     },
@@ -264,11 +276,33 @@
             "config/routes.yaml"
         ]
     },
+    "symfony/security-core": {
+        "version": "v5.1.3"
+    },
+    "symfony/serializer": {
+        "version": "v5.1.3"
+    },
     "symfony/service-contracts": {
         "version": "v2.1.3"
     },
     "symfony/string": {
         "version": "v5.1.3"
+    },
+    "symfony/translation-contracts": {
+        "version": "v2.1.3"
+    },
+    "symfony/validator": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "d902da3e4952f18d3bf05aab29512eb61cabd869"
+        },
+        "files": [
+            "config/packages/test/validator.yaml",
+            "config/packages/validator.yaml"
+        ]
     },
     "symfony/var-dumper": {
         "version": "v5.1.3"
@@ -281,5 +315,11 @@
     },
     "webimpress/safe-writer": {
         "version": "2.0.1"
+    },
+    "willdurand/jsonp-callback-validator": {
+        "version": "v1.1.0"
+    },
+    "willdurand/negotiation": {
+        "version": "v2.3.1"
     }
 }

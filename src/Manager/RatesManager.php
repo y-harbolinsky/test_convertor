@@ -4,13 +4,17 @@ namespace App\Manager;
 
 use App\Command\UpdateRatesCommand;
 use App\Entity\Rate;
+use App\Exception\ApiBadRequestException;
+use App\Exchange\ConvertorInterface;
+use App\Request\ExchangeModel;
+use App\Repository\RateRepository;
 use App\Service\Handler\RatesHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 class RatesManager implements RatesManagerInterface
 {
-    private const ECB_SOURCE_CURRENCY = 'EUR';
-    private const CBR_SOURCE_CURRENCY = 'RUB';
+    public const ECB_SOURCE_CURRENCY = 'EUR';
+    public const CBR_SOURCE_CURRENCY = 'RUB';
 
     /** RatesHandlerInterface */
     private $ratesHandler;
@@ -18,10 +22,17 @@ class RatesManager implements RatesManagerInterface
     /** @var EntityManagerInterface */
     private $em;
 
-    public function __construct(RatesHandlerInterface $ratesHandler, EntityManagerInterface $em)
-    {
+    /** @var ConvertorInterface */
+    private $convertor;
+
+    public function __construct(
+        RatesHandlerInterface $ratesHandler,
+        EntityManagerInterface $em,
+        ConvertorInterface $convertor
+    ) {
         $this->ratesHandler = $ratesHandler;
         $this->em = $em;
+        $this->convertor = $convertor;
     }
 
     public function updateRates(string $source): void
@@ -57,6 +68,25 @@ class RatesManager implements RatesManagerInterface
         $connection->executeUpdate($platform->getTruncateTableSQL('rates'));
     }
 
+    public function getAvailableRates(): array
+    {
+        $rates = $this->getRatesRepository()->getRates();
+
+        if (empty($rates)) {
+            throw new ApiBadRequestException('No rates available.');
+        }
+
+        return $this->prepareRatesArray($rates);
+    }
+
+    public function convertMoney(ExchangeModel $model): array
+    {
+        return $this->convertor->convert(
+            $model,
+            $this->getAvailableRates()
+        );
+    }
+
     private function updateEcbRates(): void
     {
         $rates = $this->ratesHandler->getEcbRates();
@@ -89,5 +119,20 @@ class RatesManager implements RatesManagerInterface
     {
         $this->updateEcbRates();
         $this->updateCbrRates();
+    }
+
+    private function prepareRatesArray(array $ratesData): array
+    {
+        $rates = [];
+        foreach ($ratesData as $rateData) {
+            $rates[$rateData['baseCurrency']][$rateData['targetCurrency']] = $rateData['exchangeRate'];
+        }
+
+        return $rates;
+    }
+
+    private function getRatesRepository(): RateRepository
+    {
+        return $this->em->getRepository(Rate::class);
     }
 }

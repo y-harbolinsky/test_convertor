@@ -26,3 +26,11 @@ services:
         arguments:
             $ecbSourceUrl: '%env(ECB_SOURCE_URL)%'
             $cbrSourceUrl: '%env(CBR_SOURCE_URL)%'
+
+    app.rates_manager:
+        class: App\Manager\RatesManager
+        public: true
+
+    App\Controller\ConvertorController:
+        arguments:
+            $manager: '@app.rates_manager'

@@ -12,4 +12,12 @@ class RateRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Rate::class);
     }
+
+    public function getRates(): array
+    {
+        return $this->createQueryBuilder('r')
+            ->select('r.baseCurrency, r.targetCurrency, r.exchangeRate')
+            ->getQuery()
+            ->getArrayResult();
+    }
 }

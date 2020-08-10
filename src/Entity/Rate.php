@@ -7,6 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @codeCoverageIgnore
  * @ORM\Entity(repositoryClass=RateRepository::class)
  * @ORM\Table(name="rates", indexes={@ORM\Index(name="base_currency_idx", columns={"base_currency"})})
  */

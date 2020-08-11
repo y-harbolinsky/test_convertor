@@ -24,7 +24,7 @@ class Convertor implements ConvertorInterface
             'baseCurrency' => $baseCurrency,
             'baseAmount' => $baseAmount,
             'targetCurrency' => $targetCurrency,
-            'targetAmount' => $targetAmount,
+            'targetAmount' => number_format($targetAmount, 4),
         ];
     }
 

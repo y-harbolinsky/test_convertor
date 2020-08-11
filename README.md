@@ -16,7 +16,7 @@ Get all available (stored) exchange rates:
 ```
 GET /api/v1/convertor/rates
 ```
-Convert amoutn from {base} currency to {target} currency
+Convert amount from {base} currency to {target} currency
 ```
 GET /api/v1/convertor/{base}/{target}/{amount}
 ```

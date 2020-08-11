@@ -40,8 +40,7 @@ class Convertor implements ConvertorInterface
             $targetAmount = $baseAmount / $rates[$targetCurrency][$baseCurrency];
         }
 
-        if (
-            !isset($rates[$baseCurrency]) && !isset($rates[$targetCurrency])
+        if (!isset($rates[$baseCurrency]) && !isset($rates[$targetCurrency])
             && isset($rates[RatesManager::ECB_SOURCE_CURRENCY][$baseCurrency])
             && isset($rates[RatesManager::ECB_SOURCE_CURRENCY][$targetCurrency])
         ) {
@@ -49,8 +48,7 @@ class Convertor implements ConvertorInterface
             $targetAmount = $amountInEur * $rates[RatesManager::ECB_SOURCE_CURRENCY][$targetCurrency];
         }
 
-        if (
-            !$targetAmount && !isset($rates[$baseCurrency]) && !isset($rates[$targetCurrency])
+        if (!$targetAmount && !isset($rates[$baseCurrency]) && !isset($rates[$targetCurrency])
             && isset($rates[RatesManager::CBR_SOURCE_CURRENCY][$baseCurrency])
             && isset($rates[RatesManager::CBR_SOURCE_CURRENCY][$targetCurrency])
         ) {

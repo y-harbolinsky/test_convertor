@@ -98,12 +98,14 @@ class RatesFetcherTest extends TestCase
     /** @return RatesSourceConfig|MockObject */
     private function mockConfig(): RatesSourceConfig
     {
-        return $this->createMock(RatesSourceConfig::class);;
+        return $this->createMock(RatesSourceConfig::class);
+        ;
     }
 
     /** @return ResponseInterface|MockObject */
     private function mockResponse(): ResponseInterface
     {
-        return $this->createMock(ResponseInterface::class);;
+        return $this->createMock(ResponseInterface::class);
+        ;
     }
 }

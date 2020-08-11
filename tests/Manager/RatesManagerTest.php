@@ -103,13 +103,15 @@ class RatesManagerTest extends TestCase
     /** @return EntityManagerInterface|MockObject */
     private function mockEntityManager(): EntityManagerInterface
     {
-        return $this->createMock(EntityManagerInterface::class);;
+        return $this->createMock(EntityManagerInterface::class);
+        ;
     }
 
     /** @return ConvertorInterface|MockObject */
     private function mockConvertor(): ConvertorInterface
     {
-        return $this->createMock(ConvertorInterface::class);;
+        return $this->createMock(ConvertorInterface::class);
+        ;
     }
 
     /** @return RateRepository|MockObject */

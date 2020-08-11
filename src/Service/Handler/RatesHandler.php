@@ -33,7 +33,7 @@ class RatesHandler implements RatesHandlerInterface
         $rates = [];
         $data = simplexml_load_string($content);
 
-        foreach($data->Cube->Cube->Cube as $currency) {
+        foreach ($data->Cube->Cube->Cube as $currency) {
             $rates[(string)$currency['currency']] = (string)$currency['rate'];
         }
 
@@ -45,7 +45,7 @@ class RatesHandler implements RatesHandlerInterface
         $rates = [];
         $data = simplexml_load_string($content);
 
-        foreach($data->Valute as $currency) {
+        foreach ($data->Valute as $currency) {
             $rates[(string)$currency->CharCode] = (string)$currency->Value;
         }
 

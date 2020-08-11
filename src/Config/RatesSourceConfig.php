@@ -2,6 +2,7 @@
 
 namespace App\Config;
 
+/** @codeCoverageIgnore */
 class RatesSourceConfig
 {
     /** @var string */

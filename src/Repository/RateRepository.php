@@ -6,6 +6,7 @@ use App\Entity\Rate;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+/** @codeCoverageIgnore */
 class RateRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)

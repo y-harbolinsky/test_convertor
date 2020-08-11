@@ -4,6 +4,7 @@ namespace App\Request;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
+/** @codeCoverageIgnore */
 class ExchangeModel
 {
     /**

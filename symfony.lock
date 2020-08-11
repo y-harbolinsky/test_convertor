@@ -153,6 +153,9 @@
             "config/packages/stof_doctrine_extensions.yaml"
         ]
     },
+    "symfony/browser-kit": {
+        "version": "v5.1.3"
+    },
     "symfony/cache": {
         "version": "v5.1.3"
     },
@@ -174,6 +177,9 @@
             "bin/console"
         ]
     },
+    "symfony/css-selector": {
+        "version": "v5.1.3"
+    },
     "symfony/dependency-injection": {
         "version": "v5.1.3"
     },
@@ -181,6 +187,9 @@
         "version": "v2.1.3"
     },
     "symfony/doctrine-bridge": {
+        "version": "v5.1.3"
+    },
+    "symfony/dom-crawler": {
         "version": "v5.1.3"
     },
     "symfony/dotenv": {
@@ -261,6 +270,21 @@
     },
     "symfony/orm-pack": {
         "version": "v2.0.0"
+    },
+    "symfony/phpunit-bridge": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "6d0e35f749d5f4bfe1f011762875275cd3f9874f"
+        },
+        "files": [
+            ".env.test",
+            "bin/phpunit",
+            "phpunit.xml.dist",
+            "tests/bootstrap.php"
+        ]
     },
     "symfony/polyfill-intl-grapheme": {
         "version": "v1.18.1"

@@ -14,7 +14,7 @@ class Convertor implements ConvertorInterface
         $targetCurrency = $model->getTargetCurrency();
         $baseAmount = $model->getAmount();
 
-        $targetAmount = $this->calculateAmount($baseCurrency, $targetCurrency, $baseAmount);
+        $targetAmount = $this->calculateAmount($rates, $baseCurrency, $targetCurrency, $baseAmount);
 
         if (!$targetAmount) {
             throw new ApiBadRequestException('Impossible to convert ' . $baseCurrency . ' to ' . $targetCurrency . '.');
@@ -28,7 +28,7 @@ class Convertor implements ConvertorInterface
         ];
     }
 
-    private function calculateAmount(string $baseCurrency, string $targetCurrency, float $baseAmount): ?float
+    private function calculateAmount(array $rates, string $baseCurrency, string $targetCurrency, float $baseAmount): ?float
     {
         $targetAmount = null;
 
@@ -41,41 +41,26 @@ class Convertor implements ConvertorInterface
         }
 
         if (
-        !isset($rates[$baseCurrency]) && !isset($rates[$targetCurrency])
-        && isset($rates[RatesManager::ECB_SOURCE_CURRENCY][$baseCurrency])
-        && isset($rates[RatesManager::ECB_SOURCE_CURRENCY][$targetCurrency])
+            !isset($rates[$baseCurrency]) && !isset($rates[$targetCurrency])
+            && isset($rates[RatesManager::ECB_SOURCE_CURRENCY][$baseCurrency])
+            && isset($rates[RatesManager::ECB_SOURCE_CURRENCY][$targetCurrency])
         ) {
-            $amountInEur = $baseAmount * $rates[RatesManager::ECB_SOURCE_CURRENCY][$baseCurrency];
-            $targetAmount = $amountInEur / $rates[RatesManager::ECB_SOURCE_CURRENCY][$targetCurrency];
+            $amountInEur = $baseAmount / $rates[RatesManager::ECB_SOURCE_CURRENCY][$baseCurrency];
+            $targetAmount = $amountInEur * $rates[RatesManager::ECB_SOURCE_CURRENCY][$targetCurrency];
         }
 
         if (
-        !isset($rates[$baseCurrency]) && !isset($rates[$targetCurrency])
+            !$targetAmount && !isset($rates[$baseCurrency]) && !isset($rates[$targetCurrency])
             && isset($rates[RatesManager::CBR_SOURCE_CURRENCY][$baseCurrency])
             && isset($rates[RatesManager::CBR_SOURCE_CURRENCY][$targetCurrency])
         ) {
-            $amountInRub = $baseAmount * $rates[RatesManager::CBR_SOURCE_CURRENCY][$baseCurrency];
-            $targetAmount = $amountInRub / $rates[RatesManager::CBR_SOURCE_CURRENCY][$targetCurrency];
+            $amountInRub = $baseAmount / $rates[RatesManager::CBR_SOURCE_CURRENCY][$baseCurrency];
+            $targetAmount = $amountInRub * $rates[RatesManager::CBR_SOURCE_CURRENCY][$targetCurrency];
         }
 
         if ($baseCurrency === $targetCurrency) {
             $targetAmount = $baseAmount;
         }
-        // Check EUR -> UAH
-        //         if (
-        //             !$targetAmount &&
-        //             (isset($rates[$baseCurrency]) || !isset($rates[$baseCurrency][$targetCurrency]))
-        //         ) {
-        //             if (isset($rates[RatesManager::ECB_SOURCE_CURRENCY][$targetCurrency])) {
-        //                 $amountInEur = $baseAmount * $rates[RatesManager::ECB_SOURCE_CURRENCY][$baseCurrency];
-        //             }
-        //
-        //             if (isset($rates[RatesManager::CBR_SOURCE_CURRENCY][$targetCurrency])) {
-        //                 $amountInRub = $baseAmount * $rates[RatesManager::CBR_SOURCE_CURRENCY][$baseCurrency];
-        //                 $targetAmount = $amountInRub / $rates[RatesManager::CBR_SOURCE_CURRENCY][$targetCurrency];
-        //                 dd($amountInRub);
-        //             }
-        //         }
 
         return $targetAmount;
     }

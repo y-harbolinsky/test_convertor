@@ -30,7 +30,7 @@ class RatesFetcher implements RatesFetcherInterface
         );
 
         if (Response::HTTP_OK !== $response->getStatusCode()) {
-            throw new \FetchException('unable to fetch rates. Please try again later.');
+            throw new FetchException('unable to fetch rates. Please try again later.');
         }
 
         return $response->getContent();
@@ -44,7 +44,7 @@ class RatesFetcher implements RatesFetcherInterface
         );
 
         if (Response::HTTP_OK !== $response->getStatusCode()) {
-            throw new \FetchException('unable to fetch rates. Please try again later.');
+            throw new FetchException('unable to fetch rates. Please try again later.');
         }
 
         return $response->getContent();
